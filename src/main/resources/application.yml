@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/converter_db
+    username: converter_db_admin
+    password: 1Qwerty1
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+
+server:
+  port: 8080

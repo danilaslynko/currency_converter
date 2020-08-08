@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/converter.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Конвертер</title>
+</head>
+<header th:insert="header"></header>
+<body>
+<div style="margin-top: 8%">
+    <form method="post" class="converter-form">
+        <div class="elements-row">
+            <select class="selector" name="originalValute">
+                <option value="RUB">Российский рубль (RUB)</option>
+                <option th:each="value : ${values}"
+                        th:value="${value.getValute().getCharCode()}"
+                        th:text="${value.getValute().getName() + ' (' + value.getValute().getCharCode() + ')'}"
+                        th:selected="${value.getValute().getCharCode().equals(originalValuteCharCode)}">
+                </option>
+            </select>
+            <select class="selector" name="targetValute">
+                <option value="RUB">Российский рубль (RUB)</option>
+                <option th:each="value : ${values}"
+                        th:value="${value.getValute().getCharCode()}"
+                        th:text="${value.getValute().getName() + ' (' + value.getValute().getCharCode() + ')'}"
+                        th:selected="${value.getValute().getCharCode().equals(targetValuteCharCode) ||
+                                        value.getValute().getCharCode().equals('USD') && targetValuteCharCode == null}">
+                </option>
+            </select>
+        </div>
+        <div class="elements-row">
+            <input class="selector" type="number" step="0.01" min="0.01" name="originalValue"
+                   placeholder="Исходная сумма" required
+                   th:value="${originalAmount}"/>
+            <input class="selector" name="result" readonly placeholder="Результат конвертации" th:value="${result}"/>
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        </div>
+        <button class="btn btn-success input-element" style="width: 30%" type="submit">
+            Конвертировать
+        </button>
+    </form>
+</div>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Исходная валюта</th>
+                <th>Целевая валюта</th>
+                <th>Исходная сумма</th>
+                <th>Результат конвертации</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="entry : ${history}" th:title="'Курс на момент операции ' + ${entry.exchangeRate} + ':1'">
+                <td th:text="${entry.originalValute.charCode}"></td>
+                <td th:text="${entry.targetValute.charCode}"></td>
+                <td th:text="${entry.originalAmount}"></td>
+                <td th:text="${entry.totalAmount}"></td>
+                <td><a th:href="'/converter/rates?date=' + ${entry.date}" th:text="${entry.date}"></a></td>
+             </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

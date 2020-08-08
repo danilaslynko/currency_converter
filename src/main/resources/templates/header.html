@@ -1,0 +1,10 @@
+<header class="header shadow-sm">
+    <a class="mr-md-auto btn btn-block"
+       style="width: 120px">Конвертер валют</a>
+    <nav class="elements-row">
+        <a class="p-2 text-dark" href="/rates">Актуальный курс валют</a>
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+            <input type="submit" class="btn btn-success" value="Выйти"/>
+        </form>
+    </nav>
+</header>

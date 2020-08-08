@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/converter.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Курсы валют по дате</title>
+</head>
+<body>
+<form action="/">
+    <button type="submit" class="btn btn-primary mt-2 ml-2">Назад</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Числовой код</th>
+        <th>Буквенный код</th>
+        <th>Номинал</th>
+        <th>Название</th>
+        <th>Курс к рублю</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rate : ${rates}">
+        <td th:text="${rate.valute.id}"></td>
+        <td th:text="${rate.valute.numCode}"></td>
+        <td th:text="${rate.valute.charCode}"></td>
+        <td th:text="${rate.valute.nominal}"></td>
+        <td th:text="${rate.valute.name}"></td>
+        <td th:text="${rate.value}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

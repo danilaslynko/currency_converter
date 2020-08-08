@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="../css/converter.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Авторизация</title>
+</head>
+<body>
+<header th:insert="header"></header>
+<div style="margin-top: 12%">
+    <form action="/login" method="post" class="user-form">
+        <h2 style="text-align: center">Вход</h2>
+        <input class="input-element" required type="text" name="username" placeholder="Имя пользователя"/>
+        <input class="input-element" required type="password" name="password" placeholder="Пароль"/>
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        <span class="error" th:text="${error}" th:if="${error != null}"></span>
+        <button type="submit" class="btn btn-primary input-element">Войти</button>
+        <a href="/registration" class="input-element">Регистрация</a>
+    </form>
+</div>
+</body>
+</html>
