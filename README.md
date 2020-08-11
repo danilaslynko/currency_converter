@@ -30,6 +30,6 @@
 Проверено выполнение скриптов командами:
 **psql -U postgres -f your/path/to/database_creation_script.sql** - подставить свой путь к 1-ому скрипту;
 **psql -U converter_db_admin -d converter_db -f your/path/to/create_tables.sql** - подставить свой путь ко 2-ому скрипту;
-Собирать как обычное maven-приложение, к примеру, в директории проекта выполнить **mvn package clean**, получившийся jar
+Собирать как обычное maven-приложение, к примеру, в директории проекта выполнить **mvn package**, получившийся jar
 лежит в директории target. Деплоить с соответствии с нуждами, запуск на локальной машине можно произвести командой
 **java -jar currency_converter-0.0.1-SNAPSHOT.jar**, приложение будет крутиться на localhost:8080.
