@@ -1,5 +1,6 @@
 package com.testtask.currencyconverter.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,10 +13,13 @@ import java.util.Date;
 @Service
 public class CBRDataExchangeService {
 
+    @Value("${cbr.url}")
+    private String CBRUrl;
+
     public InputStream getValutesXML(Date date) throws IOException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        URL url = new URL("http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + dateFormat.format(date));
+        URL url = new URL(CBRUrl + dateFormat.format(date));
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
 
