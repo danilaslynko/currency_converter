@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class XMLParseService {
@@ -59,25 +63,25 @@ public class XMLParseService {
      */
     public Valute getValuteObj(Node node, Date date) {
         String id = node.getAttributes().item(0).getNodeValue();
-        // Method node.getChildNodes() doesn't work correctly, so i made this to get all child nodes of Valute node
-        List<Node> childNodes = new ArrayList<>();
+        // Method node.getChildNodes() doesn't work correctly, so i did that
+        Map<String, String> childNodes = new HashMap<>();
         for (Node child = node.getFirstChild(); child != null; child = child.getNextSibling()) {
-            childNodes.add(child);
+            childNodes.put(child.getNodeName(), child.getTextContent());
         }
 
         Valute valute = new Valute(
                 id,
-                Integer.parseInt(childNodes.get(0).getFirstChild().getTextContent()),
-                childNodes.get(1).getFirstChild().getTextContent(),
-                Integer.parseInt(childNodes.get(2).getFirstChild().getTextContent()),
-                childNodes.get(3).getFirstChild().getTextContent()
+                Integer.parseInt(childNodes.get("NumCode")),
+                childNodes.get("CharCode"),
+                Integer.parseInt(childNodes.get("Nominal")),
+                childNodes.get("Name")
         );
         Value value = new Value(
                 valute,
-                Double.parseDouble(childNodes.get(4)
-                        .getFirstChild()
-                        .getTextContent()
-                        .replace(',','.')),
+                Double.parseDouble(
+                        childNodes
+                                .get("Value")
+                                .replace(',','.')),
                 date
         );
 
